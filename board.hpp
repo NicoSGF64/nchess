@@ -2,7 +2,7 @@
 
 #include <array>
 
- std::array<std::array<int,7>,7> initBoard()
+std::array<std::array<int,7>,7> initBoard()
 {
     std::array<std::array<int,7>,7> board;
 
