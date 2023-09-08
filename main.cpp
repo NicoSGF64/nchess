@@ -8,9 +8,9 @@ int main()
 	setlocale(LC_ALL, "");
 	initCurses();
 	defPieces();
-	std::array<std::array<piece,7>,7> board = initBoard();
+	std::array<std::array<piece,8>,8> board = initBoard();
 	drawBoard(board);
-	for(int t=0; t<=3; t++)
+	for(int t=0; t<=8; t++)
 	{
 		board = movePiece(board);
 		drawBoard(board);

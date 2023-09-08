@@ -1,4 +1,3 @@
-#include "board.hpp"
 #pragma once
 
 std::array<int,4> getCoord()
@@ -26,24 +25,47 @@ std::array<int,4> getCoord()
 
 //I love std::array. How could you tell?
 
-bool verify(std::array<int,4> __cord, std::array<std::array<piece,7>,7> __board)
+bool verify(std::array<int,4> __cord, std::array<std::array<piece,8>,8> __board)
 {
-    switch(__board[__cord[0]][__cord[1]].id)
+    if(((__board[__cord[0]][__cord[1]].colour==__board[__cord[2]][__cord[3]].colour) && __board[__cord[2]][__cord[3]].id==0)==true)
     {
-        case 1:
-            if(__cord[2]==__cord[0]+1)
-            {
+        switch(__board[__cord[0]][__cord[1]].id)
+        {
+            case 1:
+            
+                if(MOVEPAWNFOWARD)
+                {
+                    return true;
+                }
+                    else
+                    { 
+                        if (MOVEPAWNCAPTURE)
+                        {
+                            return true;
+                        }
+                    }
+                break;
+
+            case 2:
                 return true;
-            }
+                break;
+            case 3:
+                if(MOVEBISHOP)
+                {
+                    return true;
+                }
+                break;
+
+            case 7:
+
+            return true;
             break;
-        case 7:
-        return true;
-        break;
+        }
     }
     return false;
 }
 
-std::array<std::array<piece,7>,7> movePiece(std::array<std::array<piece,7>,7> _board)
+std::array<std::array<piece,8>,8> movePiece(std::array<std::array<piece,8>,8> _board)
 {
     std::array<int,4> _cord = getCoord();
     bool possible = false;
@@ -51,12 +73,13 @@ std::array<std::array<piece,7>,7> movePiece(std::array<std::array<piece,7>,7> _b
 
     while (possible == false)
     {
+    drawBoard(_board);
     printw("Invalid movement!\n");
     _cord = getCoord();
     possible = verify(_cord, _board);
     }
-    _board[_cord[2]][_cord[3]].id=_board[_cord[0]][_cord[1]].id;
-    _board[_cord[0]][_cord[1]].id=0;
+    _board[_cord[2]][_cord[3]]=_board[_cord[0]][_cord[1]];
+    _board[_cord[0]][_cord[1]]=empty;
     
     possible=false;
     return _board;

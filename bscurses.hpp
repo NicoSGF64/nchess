@@ -1,5 +1,5 @@
 #include <ncurses.h>
-
+#pragma once
 //A private collection of ncurses shorcuts
 
 void initCurses()
