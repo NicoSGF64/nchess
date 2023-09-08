@@ -31,7 +31,7 @@ void drawBoard(std::array<std::array<piece,7>,7> _board)
     {
         for(int j=0; j<=6; j++)
         {
-            printw(&_board[i][j].icon);
+            printw("%s", &_board[i][j].icon);
         }
         printw("\n");
     }
