@@ -55,8 +55,8 @@ std::array<std::array<piece,7>,7> movePiece(std::array<std::array<piece,7>,7> _b
     _cord = getCoord();
     possible = verify(_cord, _board);
     }
+    _board[_cord[2]][_cord[3]].id=_board[_cord[0]][_cord[1]].id;
     _board[_cord[0]][_cord[1]].id=0;
-    _board[_cord[2]][_cord[3]].id=7;
     
     possible=false;
     return _board;
