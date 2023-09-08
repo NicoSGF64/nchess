@@ -1,4 +1,5 @@
 #include "board.hpp"
+#pragma once
 
 std::array<int,4> getCoord()
 {
@@ -29,6 +30,12 @@ bool verify(std::array<int,4> __cord, std::array<std::array<piece,7>,7> __board)
 {
     switch(__board[__cord[0]][__cord[1]].id)
     {
+        case 1:
+            if(__cord[2]==__cord[0]+1)
+            {
+                return true;
+            }
+            break;
         case 7:
         return true;
         break;

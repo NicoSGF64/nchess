@@ -1,7 +1,9 @@
-// ld won't work unless this is a .hpp for some reason
+#pragma once //Does magic to stop redifinition errors. Apparently this makes it so that files don't get included twice.
+             //I don't know why they would be included twice but here we are
 #include <array>
-#include <locale.h>
 #include "piece.hpp"
+
+// Since we are working with ncurses, first one is y and second one is x. I hate it, but I'd rather not have two coordinate systems at the same time
 
 std::array<std::array<piece,7>,7> initBoard()
 {
@@ -22,6 +24,8 @@ std::array<std::array<piece,7>,7> initBoard()
 
 void drawBoard(std::array<std::array<piece,7>,7> _board)
 {
+    clear(); //clear the board so that we don't use up space
+
     for(int i=6; i>=0; i--)
     {
         for(int j=0; j<=6; j++)

@@ -1,7 +1,7 @@
+#include <locale.h>
 #include "bscurses.hpp"
-#include "board.hpp"
+#include "board.hpp" // ld won't work unless this is a .hpp for some reason
 #include "move.hpp"
-#include "piece.hpp"
 
 int main()
 {
