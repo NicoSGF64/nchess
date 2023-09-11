@@ -22,10 +22,14 @@ std::array<std::array<piece*,8>,8> initBoard()
     for(int i=0; i<=7; i++)
     {
         _board[1][i]=pawnptr;
-        _board[1][i]->colour=true;
+        _board[1][i]->colour=white;
     }
-    _board[0][1]=debugptr;
-    _board[0][0]=bishopptr;
+    _board[3][3]=debugptr;
+    _board[3][3]->colour=black;
+    _board[0][2]=bishopptr;
+    _board[0][5]=bishopptr;
+    _board[0][1]=knightptr;
+    _board[0][6]=knightptr;
 
     return _board;
 }
@@ -38,7 +42,6 @@ void drawBoard(std::array<std::array<piece*,8>,8> _board)
     {
         for(int j=0; j<=7; j++)
         {
-            //const char simplenton1[]=_board[i][j].icon;
             printw(_board[i][j]->icon);
             refresh();
         }

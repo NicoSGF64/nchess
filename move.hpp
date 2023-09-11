@@ -1,8 +1,11 @@
+#include <string>
 #pragma once
 
 std::array<int,4> getCoord()
 {
     std::array<int,4> cord;
+    std::string square;
+    std::string letters="abcdefgh";
     printw("\nYour turn\n");
 
     echo();
@@ -12,6 +15,8 @@ std::array<int,4> getCoord()
     refresh();
     cord[0]=getch()-48; // Curses numbers: 48 (0) - 58 (10)
     cord[1]=getch()-48;
+
+    //Cord 0 goes with cord 2, and cord 1 goes with cord 3
 
     printw("\nTo: ");
     refresh();
@@ -47,7 +52,10 @@ bool verify(std::array<int,4> __cord, std::array<std::array<piece*,8>,8> __board
                 break;
 
             case 2:
-                return true;
+                if(MOVEKNIGHT)
+                {
+                    return true;
+                }
                 break;
             case 3:
                 if(MOVEBISHOP)
@@ -56,8 +64,10 @@ bool verify(std::array<int,4> __cord, std::array<std::array<piece*,8>,8> __board
                 }
                 break;
 
-            case 7:
+            //case 4:
+                
 
+            case 7:
             return true;
             break;
         }
