@@ -8,7 +8,7 @@ int main()
 	setlocale(LC_ALL, "");
 	initCurses();
 	defPieces();
-	std::array<std::array<piece,8>,8> board = initBoard();
+	std::array<std::array<piece*,8>,8> board = initBoard();
 	drawBoard(board);
 	for(int t=0; t<=8; t++)
 	{

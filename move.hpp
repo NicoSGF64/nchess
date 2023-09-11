@@ -25,11 +25,11 @@ std::array<int,4> getCoord()
 
 //I love std::array. How could you tell?
 
-bool verify(std::array<int,4> __cord, std::array<std::array<piece,8>,8> __board)
+bool verify(std::array<int,4> __cord, std::array<std::array<piece*,8>,8> __board)
 {
-    if(((__board[__cord[0]][__cord[1]].colour==__board[__cord[2]][__cord[3]].colour) && __board[__cord[2]][__cord[3]].id==0)==true)
+    if((!(__board[__cord[0]][__cord[1]]->colour==__board[__cord[2]][__cord[3]]->colour) || __board[__cord[2]][__cord[3]]->id==0)==true)
     {
-        switch(__board[__cord[0]][__cord[1]].id)
+        switch(__board[__cord[0]][__cord[1]]->id)
         {
             case 1:
             
@@ -65,7 +65,7 @@ bool verify(std::array<int,4> __cord, std::array<std::array<piece,8>,8> __board)
     return false;
 }
 
-std::array<std::array<piece,8>,8> movePiece(std::array<std::array<piece,8>,8> _board)
+std::array<std::array<piece*,8>,8> movePiece(std::array<std::array<piece*,8>,8> _board)
 {
     std::array<int,4> _cord = getCoord();
     bool possible = false;
@@ -79,7 +79,7 @@ std::array<std::array<piece,8>,8> movePiece(std::array<std::array<piece,8>,8> _b
     possible = verify(_cord, _board);
     }
     _board[_cord[2]][_cord[3]]=_board[_cord[0]][_cord[1]];
-    _board[_cord[0]][_cord[1]]=empty;
+    _board[_cord[0]][_cord[1]]=emptyptr;
     
     possible=false;
     return _board;

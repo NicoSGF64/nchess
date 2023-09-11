@@ -2,8 +2,8 @@
 #include "bscurses.hpp"
 #pragma once
 //I love unreadable code. Refractor later!
-#define MOVEPAWNFOWARD (((__cord[2]==__cord[0]+1) && (__cord[1]==__cord[3]) && (__board[__cord[2]][__cord[3]].id==0)))
-#define MOVEPAWNCAPTURE ((__cord[2]==__cord[0]+1) && (((__cord[1]==__cord[3]+1) || (__cord[1]==__cord[3]-1))) && (__board[__cord[2]][__cord[3]].id==0))
+#define MOVEPAWNFOWARD (((__cord[2]==__cord[0]+1) && (__cord[1]==__cord[3]) && (__board[__cord[2]][__cord[3]]->id==0)))
+#define MOVEPAWNCAPTURE ((__cord[2]==__cord[0]+1) && (((__cord[1]==__cord[3]+1) || (__cord[1]==__cord[3]-1))) && (__board[__cord[2]][__cord[3]]->id==0))
 #define MOVEBISHOP ((__cord[2]-__cord[0])==(__cord[3]-__cord[1]) || (__cord[2]-__cord[0])==-(__cord[3]-__cord[1]))
 
 class piece
@@ -22,6 +22,12 @@ piece pawn;
 piece debug;
 piece knight;
 piece bishop;
+
+piece* emptyptr = &empty;
+piece* pawnptr = &pawn;
+piece* debugptr = &debug;
+piece* knightptr = &knight;
+piece* bishopptr = &bishop;
 
 void defPieces()
 {
