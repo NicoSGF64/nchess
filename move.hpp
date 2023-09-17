@@ -1,31 +1,66 @@
 #include <string>
 #pragma once
 
+std::array<int,2> parseCoord(std::string _square)
+{
+    std::string letters="abcdefgh";
+    std::array<int,2> _cord;
+    auto i=0; // Look at me! I know C++11!
+    while(letters.at(i)!=_square.at(0))
+    {
+        i++;
+    }
+    _cord[0]=i;
+    _cord[1]=static_cast<int>(_square.at(1));
+
+    return _cord;
+}
+
 std::array<int,4> getCoord()
 {
     std::array<int,4> cord;
-    std::string square;
-    std::string letters="abcdefgh";
-    printw("\nYour turn\n");
-
+    std::string squaref,squaret;
+    
+    std::array<int,2> copyCoord; //We get a buffer until I find a more elegant solution
     echo();
-    //char piece=getch()-48;
+    printw("\nYour turn\n");
 
     printw("From: ");
     refresh();
-    cord[0]=getch()-48; // Curses numbers: 48 (0) - 58 (10)
-    cord[1]=getch()-48;
-
-    //Cord 0 goes with cord 2, and cord 1 goes with cord 3
+    getstr(squaref.data());
 
     printw("\nTo: ");
     refresh();
-    cord[2]=getch()-48;
-    cord[3]=getch()-48;
-    printw("\n");
+    squaret = getstr(squaret.data());
+    printw(squaret.data());
+    refresh();
+    getch();
+    /*
+    printw("\nYour turn\n");
+    echo();
+
+    printw("From: ");
     refresh();
 
-    return cord;
+    //Cord 0 goes with cord 2, and cord 1 goes with cord 3
+    getstr(squaref.data());
+    //cord[0]=getch()-49; // Curses numbers: 48 (0) - 58 (10)
+    //cord[1]=getch()-49;
+    copyCord = parseCoord(squaref);
+    cord[0,1] = copyCord[0,1];
+    
+    printw("\nTo: ");
+    refresh();
+    getstr(squaret.data());
+    copyCord = parseCoord(squaret);
+    cord[2,3] = copyCord[0,1];
+    //cord[2]=getch()-49;
+    //cord[3]=getch()-49;
+    printw("\n");
+    refresh();
+    */
+    throw std::runtime_error("Someone fucked up");
+    //return cord;
 }
 
 //I love std::array. How could you tell?

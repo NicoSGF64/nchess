@@ -1,13 +1,14 @@
 #include <locale.h>
 #include "bscurses.hpp"
-#include "board.hpp" // ld won't work unless this is a .hpp for some reason
+#include "board.hpp"
 #include "move.hpp"
 
 int main()
 {
-	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, ""); //Unicode support
 	initCurses();
 	defPieces();
+	
 	std::array<std::array<piece*,8>,8> board = initBoard();
 	drawBoard(board);
 	for(int t=0; t<=8; t++)
