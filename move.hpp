@@ -1,17 +1,30 @@
 #include <string>
 #pragma once
 
-std::array<int,2> parseCoord(std::string _square)
+//Just as a reminder, [0] and [2] are the y axis, and [1] and [3] are the x axis
+
+std::array<int,4> parseCoord(std::string _squaref, std::string _squaret)
 {
     std::string letters="abcdefgh";
-    std::array<int,2> _cord;
+    std::array<int,4> _cord;
     auto i=0; // Look at me! I know C++11!
-    while(letters.at(i)!=_square.at(0))
+    while(letters.at(i)!=_squaref.at(0))
     {
         i++;
     }
-    _cord[0]=i;
-    _cord[1]=static_cast<int>(_square.at(1));
+    
+    _cord[0]=static_cast<int>(_squaref.at(1))-49; //Safety? Overrated
+    _cord[1]=i;
+
+    i=0;
+
+    while(letters.at(i)!=_squaret.at(0))
+    {
+        i++;
+    }
+
+    _cord[2]=static_cast<int>(_squaret.at(1))-49;
+    _cord[3]=i;
 
     return _cord;
 }
@@ -20,47 +33,23 @@ std::array<int,4> getCoord()
 {
     std::array<int,4> cord;
     std::string squaref,squaret;
+    std::array<char,3> buffer; // We have to do this bad buffer workaround since string.data() doesn't actually externally set the 
     
     std::array<int,2> copyCoord; //We get a buffer until I find a more elegant solution
     echo();
     printw("\nYour turn\n");
 
-    printw("From: ");
+    printw("From: \0");
     refresh();
-    getstr(squaref.data());
+    getnstr(buffer.data(), 2);
+    squaref = buffer.data();
 
-    printw("\nTo: ");
+    printw("To: ");
     refresh();
-    squaret = getstr(squaret.data());
-    printw(squaret.data());
-    refresh();
-    getch();
-    /*
-    printw("\nYour turn\n");
-    echo();
-
-    printw("From: ");
-    refresh();
-
-    //Cord 0 goes with cord 2, and cord 1 goes with cord 3
-    getstr(squaref.data());
-    //cord[0]=getch()-49; // Curses numbers: 48 (0) - 58 (10)
-    //cord[1]=getch()-49;
-    copyCord = parseCoord(squaref);
-    cord[0,1] = copyCord[0,1];
-    
-    printw("\nTo: ");
-    refresh();
-    getstr(squaret.data());
-    copyCord = parseCoord(squaret);
-    cord[2,3] = copyCord[0,1];
-    //cord[2]=getch()-49;
-    //cord[3]=getch()-49;
-    printw("\n");
-    refresh();
-    */
-    throw std::runtime_error("Someone fucked up");
-    //return cord;
+    getnstr(buffer.data(), 2);
+    squaret = buffer.data();
+    cord = parseCoord(squaref, squaret);
+    return cord;
 }
 
 //I love std::array. How could you tell?
