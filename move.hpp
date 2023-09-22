@@ -32,22 +32,17 @@ std::array<int,4> parseCoord(std::string _squaref, std::string _squaret)
 std::array<int,4> getCoord()
 {
     std::array<int,4> cord;
-    std::string squaref,squaret;
-    std::array<char,3> buffer; // We have to do this bad buffer workaround since string.data() doesn't actually externally set the 
-    
-    std::array<int,2> copyCoord; //We get a buffer until I find a more elegant solution
+    std::string squaref="a1",squaret="a1"; //Initialize them so that getstr() doesn't write into air
     echo();
     printw("\nYour turn\n");
 
-    printw("From: \0");
+    printw("From: ");
     refresh();
-    getnstr(buffer.data(), 2);
-    squaref = buffer.data();
+    getnstr(squaref.data(), 2);
 
     printw("To: ");
     refresh();
-    getnstr(buffer.data(), 2);
-    squaret = buffer.data();
+    getnstr(squaret.data(), 2);
     cord = parseCoord(squaref, squaret);
     return cord;
 }
