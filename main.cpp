@@ -13,7 +13,7 @@ int main()
 	drawBoard(board);
 	for(int t=0; t<=8; t++)
 	{
-		board = movePiece(board);
+		movePiece(board);
 		drawBoard(board);
 	}
 	

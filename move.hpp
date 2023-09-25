@@ -32,7 +32,7 @@ std::array<int,4> parseCoord(std::string _squaref, std::string _squaret)
 std::array<int,4> getCoord()
 {
     std::array<int,4> cord;
-    std::string squaref="a1",squaret="a1"; //Initialize them so that getstr() doesn't write into air
+    std::string squaref="a1",squaret="a1"; //Initialize them so that getstr() doesn't write into air. Yes, I know I should follow RAII.
     echo();
     printw("\nYour turn\n");
 
@@ -94,7 +94,7 @@ bool verify(std::array<int,4> __cord, std::array<std::array<piece*,8>,8> __board
     return false;
 }
 
-std::array<std::array<piece*,8>,8> movePiece(std::array<std::array<piece*,8>,8> _board)
+void movePiece(std::array<std::array<piece*,8>,8> &_board)
 {
     std::array<int,4> _cord = getCoord();
     bool possible = false;
@@ -111,5 +111,4 @@ std::array<std::array<piece*,8>,8> movePiece(std::array<std::array<piece*,8>,8> 
     _board[_cord[0]][_cord[1]]=emptyptr;
     
     possible=false;
-    return _board;
 }
