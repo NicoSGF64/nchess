@@ -1,114 +1,141 @@
+#include "board.hpp"
+#include <cstdlib>
+#include <curses.h>
+#include <stdexcept>
 #include <string>
 #pragma once
 
-//Just as a reminder, [0] and [2] are the y axis, and [1] and [3] are the x axis
 
-std::array<int,4> parseCoord(std::string _squaref, std::string _squaret)
+
+struct movement
 {
-    std::string letters="abcdefgh";
-    std::array<int,4> _cord;
-    auto i=0; // Look at me! I know C++11!
-    while(letters.at(i)!=_squaref.at(0))
+    std::string notation="Qxe4"; //Initialize it so that getstr() doesn't write into air.
+    std::array <int,2> from; //Just as a reminder, [0] is the y axis, and [1] is the x axis.
+    std::array <int,2> to;  //Just as a reminder, [0] is the y axis, and [1] is the x axis.
+    bool isCapture;
+    int type;   // See piece.hpp for more details
+
+};
+
+movement parseCord(movement &_cord)
+{
+    const std::string letters = "abcdefgh";
+    const std::string pieces = "NBRQK";
+
+    for (auto i=0; i<=pieces.size(); i++) //Check which piece is being moved
     {
-        i++;
+        if(_cord.notation.at(0)==pieces.at(i))
+        {
+            _cord.type = i+2;
+            break;
+        }
+        else if (i>=pieces.size()) 
+        {
+            _cord.type = pawn.id;
+            break; //Just in case
+        }
+
     }
     
-    _cord[0]=static_cast<int>(_squaref.at(1))-49; //Safety? Overrated
-    _cord[1]=i;
-
-    i=0;
-
-    while(letters.at(i)!=_squaret.at(0))
+    if(_cord.notation.at(1)=='x') //Check if it's a capture
     {
-        i++;
+        _cord.isCapture = true;
+    } 
+    else {
+        _cord.isCapture = false;
     }
 
-    _cord[2]=static_cast<int>(_squaret.at(1))-49;
-    _cord[3]=i;
+    for (auto i=0; i<=letters.size(); i++)
+    {
+        if(_cord.notation.at(1+_cord.isCapture)==letters.at(i))
+        {
+            _cord.to[1]=i;
+            break;
+        }
+
+    }
+
+    _cord.to[0] = static_cast<int>(_cord.notation.at(2+_cord.isCapture))-49;
 
     return _cord;
 }
 
-std::array<int,4> getCoord()
+void getCord(movement &_cord)
 {
-    std::array<int,4> cord;
-    std::string squaref="a1",squaret="a1"; //Initialize them so that getstr() doesn't write into air. Yes, I know I should follow RAII.
     echo();
     printw("\nYour turn\n");
 
-    printw("From: ");
+    printw("Your move: ");
     refresh();
-    getnstr(squaref.data(), 2);
-
-    printw("To: ");
-    refresh();
-    getnstr(squaret.data(), 2);
-    cord = parseCoord(squaref, squaret);
-    return cord;
+    getnstr(_cord.notation.data(), 4);
+    
+    parseCord(_cord);
 }
-
-//I love std::array. How could you tell?
-
-bool verify(std::array<int,4> __cord, std::array<std::array<piece*,8>,8> __board)
+/*
+bool verifyMovement(movement __cord, std::array<std::array<piece*,8>,8> __board)
 {
-    if((!(__board[__cord[0]][__cord[1]]->colour==__board[__cord[2]][__cord[3]]->colour) || __board[__cord[2]][__cord[3]]->id==0)==true)
+
+    //Examples "Be4", "e3", "Qxe4", Nxa7++;
+
+    switch(__cord.at(0))
     {
-        switch(__board[__cord[0]][__cord[1]]->id)
-        {
-            case 1:
-            
-                if(MOVEPAWNFOWARD)
+        case "B":
+        
+            for(auto y=0; y>=7; y)
+            {
+                for(auto x=0; x>=7; x)
                 {
-                    return true;
+                    
                 }
-                    else
-                    { 
-                        if (MOVEPAWNCAPTURE)
-                        {
-                            return true;
-                        }
-                    }
-                break;
-
-            case 2:
-                if(MOVEKNIGHT)
-                {
-                    return true;
-                }
-                break;
-            case 3:
-                if(MOVEBISHOP)
-                {
-                    return true;
-                }
-                break;
-
-            //case 4:
-                
-
-            case 7:
-            return true;
-            break;
-        }
+            }
+        
+        case PAWNMOVE:
     }
+
     return false;
 }
-
+*/
 void movePiece(std::array<std::array<piece*,8>,8> &_board)
 {
-    std::array<int,4> _cord = getCoord();
+    movement cord ;
+    getCord(cord);
     bool possible = false;
-    possible = verify(_cord, _board);
+
+    /*
+    possible = verifyMovement(cord, _board);
 
     while (possible == false)
     {
-    drawBoard(_board);
-    printw("Invalid movement!\n");
-    _cord = getCoord();
-    possible = verify(_cord, _board);
+        drawBoard(_board);
+        printw("Invalid movement!\n");
+        getCord(cord);
+        possible = verifyMovement(cord, _board);
     }
-    _board[_cord[2]][_cord[3]]=_board[_cord[0]][_cord[1]];
-    _board[_cord[0]][_cord[1]]=emptyptr;
+    _board[cord.from[0]][cord.from[1]]=_board[cord.to[0]][cord.to[1]];
+    _board[cord.from[0]][cord.from[1]]=emptyptr;
     
     possible=false;
+    */
+}
+std::array<int, 4> parseCoord(std::string _squaref, std::string _squaret) {
+    const std::string letters = "abcdefgh";
+    std::array<int, 4> _cord;
+    auto i = 0; // Look at me! I know C++11!
+    while (letters.at(i) != _squaref.at(0)) {
+    i++;
+    }
+
+    _cord[0] = static_cast<int>(_squaref.at(1)) - 49; // Safety? Overrated
+    _cord[1] = i;
+
+    i = 0;
+
+    while (letters.at(i) != _squaret.at(0)) {
+    i++;
+    }
+
+    _cord[2] = static_cast<int>(_squaret.at(1)) - 49;
+    _cord[3] = i;
+
+    return _cord;
 }

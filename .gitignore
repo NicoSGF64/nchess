@@ -1,5 +1,10 @@
 ./.git
-**/.vscode
+**.vscode**
 **/a.out
-**/build
+*.o
+**build**
+*Debug*
 ./notes.md
+G*
+**CMake**
+**.cache**
