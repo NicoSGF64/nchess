@@ -9,9 +9,9 @@
 // Since we are working with ncurses, first one is y and second one is x. I hate
 // it, but I'd rather not have two coordinate systems at the same time
 
-std::array<std::array<piece *, 8>, 8> initBoard() {
+void initBoard(std::array<std::array<piece *, 8>, 8> &_board) {
 
-  std::array<std::array<piece *, 8>, 8> _board;
+  
   for (int i = 0; i <= 7; i++) {
     for (int j = 0; j <= 7; j++) {
       _board[i][j] = emptyptr;
@@ -28,8 +28,6 @@ std::array<std::array<piece *, 8>, 8> initBoard() {
   _board[0][5] = bishopptr;
   _board[0][1] = knightptr;
   _board[0][6] = knightptr;
-
-  return _board;
 }
 
 void drawBoard(std::array<std::array<piece *, 8>, 8> _board) {

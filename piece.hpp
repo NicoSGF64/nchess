@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <string>
 #include "bscurses.hpp"
 #pragma once
@@ -14,9 +15,8 @@
 #define MOVEKNIGHT (((__cord[0]==__cord[2]+2) && (__cord[1]==__cord[3]+1)) || ((__cord[0]==__cord[2]+1) && (__cord[1]==__cord[3]+2)) || ((__cord[0]==__cord[2]+2) && (__cord[1]==__cord[3]-1)) || ((__cord[0]==__cord[2]+1) && (__cord[1]==__cord[3]-2)) || /**/ ((__cord[0]==__cord[2]-2) && (__cord[1]==__cord[3]+1)) || ((__cord[0]==__cord[2]-1) && (__cord[1]==__cord[3]+2)) || ((__cord[0]==__cord[2]-2) && (__cord[1]==__cord[3]-1)) || ((__cord[0]==__cord[2]-1) && (__cord[1]==__cord[3]-2)))
 
 
-class piece
+struct piece
 {  
-    public:
     int id;
     std::string name;
     bool colour; //0 - white; 1 - black. No, I'm not bri'ish
@@ -25,38 +25,14 @@ class piece
 };
 
 //These are global variables until I manage to find a better way, since I don't want to have to deal with ______piece_______
-piece empty;
-piece pawn;
-piece debug;
-piece knight;
-piece bishop;
+piece empty {0, "empty space",NULL,  "."};
+piece pawn {1, "pawn", NULL, "\u265F"};
+piece knight {2, "knight", NULL, "♞"};
+piece bishop {3, "bishop", NULL, "♝"};
+piece debug {7, "debug piece", NULL, "D"};
 
 piece* emptyptr = &empty;
 piece* pawnptr = &pawn;
 piece* debugptr = &debug;
 piece* knightptr = &knight;
 piece* bishopptr = &bishop;
-
-void defPieces()
-{
-    
-    empty.id=0;
-    empty.name="empty space";
-    empty.icon=".";
-    
-    pawn.id=1;
-    pawn.name="pawn";
-    pawn.icon="\u265F"; //Unicode code. Eh.
-
-    knight.id=2;
-    knight.name="knight";
-    knight.icon="♞";
-
-    bishop.id=3;
-    bishop.name="bishop";
-    bishop.icon="♝";
-    
-    debug.id=7;
-    debug.name="debug piece";
-    debug.icon="D";
-}

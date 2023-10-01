@@ -1,6 +1,7 @@
 #include "board.hpp"
 #include <cstdlib>
 #include <curses.h>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #pragma once
@@ -71,37 +72,53 @@ void getCord(movement &_cord)
     
     parseCord(_cord);
 }
-/*
+
+void reverseSearch(movement &___cord, std::array<std::array<piece*,8>,8> ___board)
+{
+    
+    switch(___cord.type)
+    {
+        case pawn.id:
+            if(___cord.isCapture==true)
+            {
+                //Capture logic
+            }
+            else if (___board[___cord.to[0]-2][___cord.to[1]] == pawnptr && ___cord.to[0]-2 == 1) 
+            {
+                ___cord.from[0]=___cord.to[0]-2;
+                ___cord.from[1]=___cord.to[1];
+
+            }
+            else if (___board[___cord.to[0]-1][___cord.to[1]]) 
+            {
+                ___cord.from[0]=___cord.to[0]-1;
+                ___cord.from[1]=___cord.to[1];
+            }
+
+            break;
+        default:
+            throw -1;
+            break;
+    }
+}
+
 bool verifyMovement(movement __cord, std::array<std::array<piece*,8>,8> __board)
 {
-
-    //Examples "Be4", "e3", "Qxe4", Nxa7++;
-
-    switch(__cord.at(0))
-    {
-        case "B":
-        
-            for(auto y=0; y>=7; y)
-            {
-                for(auto x=0; x>=7; x)
-                {
-                    
-                }
-            }
-        
-        case PAWNMOVE:
+    try {
+    reverseSearch(__cord, __board);
+    } catch (int x) {
+        return false;
     }
 
     return false;
 }
-*/
-void movePiece(std::array<std::array<piece*,8>,8> &_board)
+
+
+std::array<std::array<piece*,8>,8> movePiece(std::array<std::array<piece*,8>,8> &_board)
 {
-    movement cord ;
+    movement cord;
     getCord(cord);
     bool possible = false;
-
-    /*
     possible = verifyMovement(cord, _board);
 
     while (possible == false)
@@ -115,27 +132,5 @@ void movePiece(std::array<std::array<piece*,8>,8> &_board)
     _board[cord.from[0]][cord.from[1]]=emptyptr;
     
     possible=false;
-    */
-}
-std::array<int, 4> parseCoord(std::string _squaref, std::string _squaret) {
-    const std::string letters = "abcdefgh";
-    std::array<int, 4> _cord;
-    auto i = 0; // Look at me! I know C++11!
-    while (letters.at(i) != _squaref.at(0)) {
-    i++;
-    }
-
-    _cord[0] = static_cast<int>(_squaref.at(1)) - 49; // Safety? Overrated
-    _cord[1] = i;
-
-    i = 0;
-
-    while (letters.at(i) != _squaret.at(0)) {
-    i++;
-    }
-
-    _cord[2] = static_cast<int>(_squaret.at(1)) - 49;
-    _cord[3] = i;
-
-    return _cord;
+    return _board;
 }
