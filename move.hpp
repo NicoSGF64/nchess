@@ -12,3 +12,5 @@ struct movement
     int type;   // See piece.hpp for more details
 
 };
+
+extern void movePiece(std::array<std::array<piece*,8>,8> &_board);

@@ -21,6 +21,8 @@ struct piece
     char* const icon;
 };
 
+//These should be constexpr, but I can't get it working
+
 extern piece empty;
 extern piece pawn;
 extern piece knight;

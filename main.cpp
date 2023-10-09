@@ -1,5 +1,4 @@
 #include <locale.h>
-#include "bscurses.hpp"
 #include "board.hpp"
 #include "move.hpp"
 

@@ -26,7 +26,7 @@ void initBoard(std::array<std::array<piece *, 8>, 8> &_board) {
   _board[0][6] = knightptr;
 }
 
-void drawBoard(std::array<std::array<piece *, 8>, 8> _board) 
+void drawBoard(std::array<std::array<piece *, 8>, 8> _board)
 {
   clear(); // clear the board so that we don't use up space
   for (int i = 7; i >= 0; i--) {

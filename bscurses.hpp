@@ -1,8 +1,9 @@
+#ifndef BSCURSES_HPP
+#define BSCURSES_HPP
 #include <ncurses.h>
-#pragma once
 //A private collection of ncurses shorcuts
 
-void initCurses()
+inline void initCurses()
 {
     initscr();              //Start curses mode
     cbreak();               //Line buffering disabled
@@ -12,7 +13,7 @@ void initCurses()
     refresh();              //Print it on to the real screen 
 }
 
-void endCurses(bool doGetch)
+inline void endCurses(bool doGetch)
 {
     if(doGetch==true)
     {
@@ -21,3 +22,4 @@ void endCurses(bool doGetch)
 
 	endwin();               //End curses mode
 }
+#endif
