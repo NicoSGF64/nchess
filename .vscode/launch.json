@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/nico/Documentos/Proxectos/chess",
-      "program": "/home/nico/Documentos/Proxectos/chess/build/Debug/outDebug",
+      "cwd": "/home/nico/Documentos/Programas/Github/Proxectos/ncurses-chess",
+      "program": "/home/nico/Documentos/Programas/Github/Proxectos/ncurses-chess/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
