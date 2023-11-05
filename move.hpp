@@ -1,7 +1,8 @@
-#include "board.hpp"
+#ifndef MOVE_HPP
+#define MOVE_HPP
+#include <array>
+#include "bscurses.hpp"
 #include "piece.hpp"
-#include <string>
-#pragma once
 
 struct movement
 {
@@ -14,3 +15,4 @@ struct movement
 };
 
 extern void movePiece(std::array<std::array<piece*,8>,8> &_board);
+#endif

@@ -1,6 +1,7 @@
+#ifndef PIECE_HPP
+#define PIECE_HPP
 #include <string>
 #include "bscurses.hpp"
-#pragma once
 
 #define white false
 #define black true
@@ -14,10 +15,10 @@
 
 struct piece
 {  
-    int id;
-    std::string name;
+    const int id;
+    std::string_view name;
     bool colour; //0 - white; 1 - black. No, I'm not bri'ish
-    char* const icon;
+    const char* const icon;
 };
 
 //These should be constexpr, but I can't get it working
@@ -33,3 +34,4 @@ extern piece* pawnptr;
 extern piece* debugptr;
 extern piece* knightptr;
 extern piece* bishopptr;
+#endif

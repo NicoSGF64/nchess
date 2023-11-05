@@ -1,13 +1,11 @@
-#include "move.hpp"
-#include <exception>
-#include <stdexcept>
-
-void drawBoard(std::array<std::array<piece *, 8>, 8> _board);
+#include "verify.hpp"
+#include "piece.hpp"
+#include <array>
 
 void parseCord(movement &_cord)
 {
-    const std::string letters = "abcdefgh";
-    const std::string pieces = "NBRQK";
+    constexpr std::string_view letters = "abcdefgh";
+    constexpr std::string_view pieces = "NBRQK";
 
     for (auto i=0; i<=pieces.size(); i++) //Check which piece is being moved
     {
@@ -26,7 +24,7 @@ void parseCord(movement &_cord)
 
     bool isNotPawn;
 
-    if(_cord.type!=1) //Check if it's a capture
+    if(_cord.type!=1) //Check if it's a pawn
     {
         isNotPawn = true;
     } 
@@ -67,107 +65,6 @@ void getCord(movement &_cord)
     getnstr(_cord.notation.data(), 4);
     
     parseCord(_cord);
-}
-
-void reverseSearch(movement &__cord, std::array<std::array<piece*,8>,8> __board)
-{
-    
-}
-
-bool verifyMovement(movement &__cord, std::array<std::array<piece*,8>,8> __board)
-{
-    switch(__cord.type)
-    {
-        case PAWN_ID:
-            if(__cord.isCapture==true)
-            {
-                //Capture logic
-                throw std::runtime_error("Invalid movement");
-            }
-            else if (__board.at(__cord.to.at(0)-2).at(__cord.to.at(1)) == pawnptr && __cord.to.at(0)-2 == 1 && __cord.to.at(1)) 
-            {
-                __cord.from.at(0)=__cord.to.at(0)-2;
-                __cord.from.at(1)=__cord.to.at(1);
-
-            }
-            else if (__board.at(__cord.to.at(0)-1).at(__cord.to.at(1)) == pawnptr) 
-            {
-                __cord.from.at(0)=__cord.to.at(0)-1;
-                __cord.from.at(1)=__cord.to.at(1);
-            }
-            break;
-            
-        case KNIGHT_ID:
-        
-        for(auto i=0; i<=8; i++)
-        {
-            short a,b;
-            switch (i) 
-            {
-                case 0:
-                    a=1;
-                    b=2;
-                    break;
-                case 1:
-                    a=-1;
-                    b=-2;
-                break;
-                case 2:
-                    b=2;
-                    a=1;
-                    break;
-                case 3:
-                    a=-2;
-                    b=-1;
-                    break;
-                case 4:
-                    a=1;
-                    b=-2;
-                    break;
-                case 5:
-                    a=-1;
-                    b=2;
-                    break;
-                case 6:
-                    a=2;
-                    b=-1;
-                    break;
-                case 7:
-                    a=-2;
-                    b=1;
-                    break;
-                default:
-                    throw std::runtime_error("Invalid movement");
-                    break;
-            }
-            try 
-            {
-              if(__cord.to.at(0)+a >= 0  && __cord.to.at(0)+a <= 7 && __cord.to.at(1)+b >= 0  && __cord.to.at(1)+b <= 7 && __board.at(__cord.to.at(0)+a).at(__cord.to.at(1)+b) == knightptr)
-              {
-                  __cord.from.at(0)=__cord.to.at(0)+a;
-                  __cord.from.at(1)=__cord.to.at(1)+b;
-                  break;
-              }
-            } 
-            catch (std::exception) 
-            {
-              //Do nothing because we already throw std::runtime_error
-            }
-            
-        }
-        break;
-        
-        default:
-            throw std::runtime_error("Invalid movement");
-            break;
-    }
-
-    if(__board.at(__cord.from.at(0)).at(__cord.from.at(1))->colour == __board.at(__cord.to.at(0)).at(__cord.to.at(1))->colour && __board.at(__cord.to.at(0)).at(__cord.to.at(1)) != emptyptr)
-    {
-        return false;
-    }
-
-    return true;
 }
 
 

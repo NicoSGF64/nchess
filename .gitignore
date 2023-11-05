@@ -398,6 +398,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+#Repository-owner added
 .vscode/launch.json
 .gitignore
 .vscode/settings.json
+a.out
+notes.md

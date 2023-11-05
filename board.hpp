@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BOARD_HPP
+#define BOARD_HPP
 #include "bscurses.hpp"
 #include "piece.hpp"
 #include <array>
@@ -8,3 +9,4 @@
 
 extern void initBoard(std::array<std::array<piece *, 8>, 8> &_board);
 extern void drawBoard(std::array<std::array<piece *, 8>, 8> _board);
+#endif
