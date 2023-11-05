@@ -4,17 +4,18 @@
 
 bool verifyMovement(movement &__cord, std::array<std::array<piece*,8>,8> __board)
 {
-    
+    //auto foo = __board.at(__cord.to.at(0)-2).at(__cord.to.at(1));
 
     switch(__cord.type)
     {
+        
         case PAWN_ID:
             if(__cord.isCapture==true)
             {
                 //Capture logic. Unimplemented
                 return false;
             }
-            else if (__board.at(__cord.to.at(0)-2).at(__cord.to.at(1)) == pawnptr && __cord.to.at(0)-2 == 1 && __cord.to.at(1)) 
+            else if (__board.at(__cord.to.at(0)-2).at(__cord.to.at(1)) == pawnptr && __cord.to.at(0)-2 == 1) 
             {
                 __cord.from.at(0)=__cord.to.at(0)-2;
                 __cord.from.at(1)=__cord.to.at(1);
@@ -112,7 +113,7 @@ bool verifyMovement(movement &__cord, std::array<std::array<piece*,8>,8> __board
                         break;
                         
                         default:
-                            throw std::runtime_error("Lambda refSwapper couldn't find a value");
+                            throw std::runtime_error("Lambda refSwapper couldn't find a value. Go complain in the Git repo.");
                         
                     }
                 };
@@ -121,9 +122,8 @@ bool verifyMovement(movement &__cord, std::array<std::array<piece*,8>,8> __board
                 {
                     for(int i=0; i<=8; i++)
                     {
-                        int y,x;//=0; // For some reason they don't go out of scope
-                        y=__cord.to.at(0)+i*refSwapper(ref, true);
-                        x=__cord.to.at(1)+i*refSwapper(ref, false);
+                        int y=__cord.to.at(0)+i*refSwapper(ref, true);
+                        int x=__cord.to.at(1)+i*refSwapper(ref, false);
 
                         
                         
@@ -147,69 +147,6 @@ bool verifyMovement(movement &__cord, std::array<std::array<piece*,8>,8> __board
                         
             }
 
-            //I could use a fancy reference counter with a lambda function and whatnot but copy-pasting is more readable and easier to debug
-            /*
-            for(int i=__cord.to.at(0); i<=__board.size(); i++)
-            {
-                for(int j=__cord.to.at(1); j<=__board.size(); j++)
-                {
-                    //Probably better to not do anything if it's empty than to check if the board isn't emptyptr AND 
-                    if(__board.at(i).at(j) == bishopptr) // && __board.at(i).at(j)->colour=="the same colour than the current player"
-                    {
-                        return true;
-                    }
-                    else if (__board.at(i).at(j) != emptyptr) 
-                    {
-                        return false;
-                    }
-                }
-            }
-            
-            for(int i=__cord.to.at(0); i<=__board.size(); i--)
-            {
-                for(int j=__cord.to.at(1); j<=__board.size(); j--)
-                {
-                    if(__board.at(i).at(j) == bishopptr)
-                    {
-                        return true;
-                    }
-                    else if (__board.at(i).at(j) != emptyptr) 
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            for(int i=__cord.to.at(0); i<=__board.size(); i++)
-            {
-                for(int j=__cord.to.at(1); j<=__board.size(); j--)
-                {
-                    if(__board.at(i).at(j) == bishopptr)
-                    {
-                        return true;
-                    }
-                    else if (__board.at(i).at(j) != emptyptr) 
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            for(int i=__cord.to.at(0); i<=__board.size(); i--)
-            {
-                for(int j=__cord.to.at(1); j<=__board.size(); j--)
-                {
-                    if(__board.at(i).at(j) == bishopptr)
-                    {
-                        return true;
-                    }
-                    else if (__board.at(i).at(j) != emptyptr) 
-                    {
-                        return false;
-                    }
-                }
-            }
-            */
         break;
         
         default:
