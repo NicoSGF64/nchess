@@ -1,6 +1,5 @@
-#include "bscurses.hpp"
+#include "board.hpp"
 #include "piece.hpp"
-#include <array>
 
 // Since we are working with ncurses, first one is y and second one is x. I hate
 // it, but I'd rather not have two coordinate systems at the same time

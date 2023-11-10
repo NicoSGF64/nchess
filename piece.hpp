@@ -1,7 +1,6 @@
 #ifndef PIECE_HPP
 #define PIECE_HPP
 #include <string>
-#include "bscurses.hpp"
 
 #define white false
 #define black true

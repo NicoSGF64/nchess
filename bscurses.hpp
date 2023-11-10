@@ -3,7 +3,7 @@
 #include <ncurses.h>
 //A private collection of ncurses shorcuts
 
-void initCurses()
+inline void initCurses()
 {
     initscr();              //Start curses mode
     cbreak();               //Line buffering disabled
@@ -13,7 +13,7 @@ void initCurses()
     refresh();              //Print it on to the real screen 
 }
 
-void endCurses(bool doGetch)
+inline void endCurses(bool doGetch)
 {
     if(doGetch==true)
     {
