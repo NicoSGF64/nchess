@@ -1,4 +1,5 @@
 ./.git
-./.vscode
-./a.out
-./build
+**/.vscode
+**/a.out
+**/build
+./notes.md
