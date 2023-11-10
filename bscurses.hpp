@@ -1,5 +1,6 @@
+#ifndef BSCURSES_HPP
+#define BSCURSES_HPP
 #include <ncurses.h>
-#pragma once
 //A private collection of ncurses shorcuts
 
 void initCurses()
@@ -21,3 +22,4 @@ void endCurses(bool doGetch)
 
 	endwin();               //End curses mode
 }
+#endif
