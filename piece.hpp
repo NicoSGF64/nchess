@@ -10,6 +10,7 @@
 #define PAWN_ID 1
 #define KNIGHT_ID 2
 #define BISHOP_ID 3
+#define ROOK_ID 4
 #define DEBUG_ID 7
 
 struct piece
@@ -26,11 +27,13 @@ extern piece empty;
 extern piece pawn;
 extern piece knight;
 extern piece bishop;
+extern piece rook;
 extern piece debug;
 
 extern piece* emptyptr;
 extern piece* pawnptr;
 extern piece* debugptr;
 extern piece* knightptr;
+extern piece* rookptr;
 extern piece* bishopptr;
 #endif
