@@ -4,5 +4,5 @@
 #include "move.hpp"
 #include "board.hpp"
 
-extern bool verifyMovement(movement &__cord, std::array<std::array<piece*,8>,8> __board);
+extern void verifyMovement(movement &__cord, std::array<std::array<piece*,8>,8> &__board);
 #endif

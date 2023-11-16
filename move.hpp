@@ -15,4 +15,5 @@ struct movement
 };
 
 extern void movePiece(std::array<std::array<piece*,8>,8> &_board);
+extern void getCord(movement &_cord, std::array<std::array<piece*,8>,8> &__board);
 #endif
