@@ -25,6 +25,7 @@ void initBoard(std::array<std::array<piece*,8>,8> &_board) {
   _board[0][6] = knightptr;
   _board[0][0] = rookptr;
   _board[0][7] = rookptr;
+  _board[0][3] = queenptr;
 }
 
 void drawBoard(std::array<std::array<piece*,8>,8> &_board)

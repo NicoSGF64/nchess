@@ -190,7 +190,117 @@ bool verifyRook(movement &___cord, BOARD &___board)
         }
                 
     }
+
     
+    
+    return false;
+}
+
+bool verifyQueen(movement &___cord, BOARD &___board)
+{
+    //It's a big copy-paste. Deal with it
+
+    //Rook part
+    for (int ref=0; ref<=1; ref++)
+    {
+        for(int x=___cord.to.at(1); x<=7; x+=(ref == 0 ? 1 : -1))
+        {
+            if (x<0) 
+            {
+                break;
+            }
+            if(___board.at(___cord.to.at(0)).at(x) == queenptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+            {
+                ___cord.from.at(0)=___cord.to.at(0);
+                ___cord.from.at(1)=x;
+                return true;
+            }
+            else if (___board.at(___cord.to.at(0)).at(x) != emptyptr) 
+            {
+                break;
+            }
+        }
+
+        for(int y=___cord.to.at(0); y<=7; y+=(ref == 0 ? 1 : -1))
+        {
+            if (y<0) 
+            {
+                break;
+            }
+            if(___board.at(y).at(___cord.to.at(1)) == queenptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+            {
+                ___cord.from.at(0)=y;
+                ___cord.from.at(1)=___cord.to.at(1);
+                return true;
+            }
+            else if (___board.at(y).at(___cord.to.at(1)) != emptyptr) 
+            {
+                break;
+            }
+        }
+                
+    }
+
+    //Bishop part
+
+    for (int ref=0; ref<=3; ref++)
+    {
+        //See verifyBishop for more info
+        auto refSwapper = [ref](bool isY)
+        {
+            switch(ref)
+            {
+                case 0:
+                    return 1;
+                break;
+
+                case 1:
+                    return -1;
+                break;
+
+                case 2:
+                    return isY == true ? 1 : -1;
+                break;
+
+                case 3:
+                    return isY == true ? -1 : 1;
+                break;
+                
+                default:
+                    throw std::runtime_error("Lambda refSwapper couldn't find a value. Go complain in the Git repo.");
+                
+            }
+        };
+        
+        try 
+        {
+            for(int i=0; i<=8; i++)
+            {
+                int y=___cord.to.at(0)+i*refSwapper(true);
+                int x=___cord.to.at(1)+i*refSwapper(false);
+
+                
+                
+                    if(___board.at(y).at(x) == queenptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+                    {
+                        ___cord.from.at(0)=y;
+                        ___cord.from.at(1)=x;
+                        return true;
+                    }
+                    else if (___board.at(y).at(x) != emptyptr) 
+                    {
+                        break;
+                    }
+            } 
+        }
+        //This probably bad design
+        catch (...) 
+        {
+            //Do nothing because errors are already "handled" by just quitting
+        } 
+                
+    }
+
     return false;
 }
 
@@ -221,6 +331,10 @@ void verifyMovement(movement &__cord, BOARD &__board)
                 valid = verifyRook(__cord, __board);
             break;
 
+            case QUEEN_ID:
+                
+                valid = verifyQueen(__cord, __board);
+            break;
 
             default:
                 throw std::runtime_error("Invalid movement");
