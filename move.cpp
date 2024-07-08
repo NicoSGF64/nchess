@@ -1,6 +1,7 @@
+#include "bscurses.hpp"
+#include "move.hpp"
 #include "verify.hpp"
 #include "piece.hpp"
-#include <array>
 
 void parseCord(movement &_cord, std::array<std::array<piece*,8>,8> &__board)
 {
@@ -13,7 +14,7 @@ void parseCord(movement &_cord, std::array<std::array<piece*,8>,8> &__board)
         {
             if (i>=pieces.size()) 
             {
-                _cord.type = pawn.id;
+                _cord.type = PAWN_ID;
                 break; //Just in case
             }
             else if(_cord.notation.at(0)==pieces.at(i))
@@ -65,28 +66,45 @@ void parseCord(movement &_cord, std::array<std::array<piece*,8>,8> &__board)
     }
 }
 
-void getCord(movement &_cord, std::array<std::array<piece*,8>,8> &__board)
+void getCord(movement &_cord, BOARD &__board)
 {
     echo();
-    printw("\nYour turn\n");
+    if (_cord.turn == white) 
+    {
+        printw("\nWhite's turn!\n");
+    }
+    else 
+    {
+        printw("\nBlack's turn!\n");
+    }
+    
 
     printw("Your move: ");
     refresh();
     getnstr(_cord.notation.data(), 4);
 
     parseCord(_cord, __board);
-
-    
 }
 
 
-void movePiece(std::array<std::array<piece*,8>,8> &_board)
+void movePiece(movement &_cord, BOARD &_board)
 {
-    movement cord;
-    getCord(cord, _board);
     
-    verifyMovement(cord, _board);
+    getCord(_cord, _board);
+    
+    verifyMovement(_cord, _board);
 
-    _board.at(cord.to.at(0)).at(cord.to.at(1))=_board.at(cord.from.at(0)).at(cord.from.at(1));
-    _board.at(cord.from.at(0)).at(cord.from.at(1))=emptyptr;
+    //Move the piece
+    _board.at(_cord.to.at(0)).at(_cord.to.at(1)) = _board.at(_cord.from.at(0)).at(_cord.from.at(1));
+    //Place an empty space at the origin
+    _board.at(_cord.from.at(0)).at(_cord.from.at(1)) = emptyptr;
+    //Change turns
+    if (_cord.turn == white)
+    {
+        _cord.turn = black;
+    }
+    else 
+    {
+        _cord.turn = white;
+    }
 }

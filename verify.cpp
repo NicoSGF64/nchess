@@ -1,25 +1,56 @@
+#include <stdexcept>
 #include "verify.hpp"
+#include "bscurses.hpp"
+#include "move.hpp"
+#include "piece.hpp"
 
 bool verifyPawn(movement &___cord, BOARD &___board)
 {
-    if(___cord.isCapture==true)
+    //Could I use a fancy lambda for clean, elegant code? Sure
+    //But this is I'd wager more readable and around as performant
+    if (___cord.turn == white) 
     {
-        //Capture logic. Unimplemented for now
-        throw -1;
-    }
-    else if (___board.at(___cord.to.at(0)-2).at(___cord.to.at(1)) == pawnptr && ___cord.to.at(0)-2 == 1) 
-    {
-        ___cord.from.at(0)=___cord.to.at(0)-2;
-        ___cord.from.at(1)=___cord.to.at(1);
-        return true;
+        if(___cord.isCapture==true)
+        {
+            //Capture logic. Unimplemented for now
+            throw -1;
+        }
+        else if (___board.at(___cord.to.at(0)-2).at(___cord.to.at(1)) == whitepawnptr && ___cord.to.at(0)-2 == 1) 
+        {
+            ___cord.from.at(0)=___cord.to.at(0)-2;
+            ___cord.from.at(1)=___cord.to.at(1);
+            return true;
 
+        }
+        else if (___board.at(___cord.to.at(0)-1).at(___cord.to.at(1)) == whitepawnptr) 
+        {
+            ___cord.from.at(0)=___cord.to.at(0)-1;
+            ___cord.from.at(1)=___cord.to.at(1);
+            return true;
+        }
     }
-    else if (___board.at(___cord.to.at(0)-1).at(___cord.to.at(1)) == pawnptr) 
+    else 
     {
-        ___cord.from.at(0)=___cord.to.at(0)-1;
-        ___cord.from.at(1)=___cord.to.at(1);
-        return true;
+        if(___cord.isCapture==true)
+        {
+            //Capture logic. Unimplemented for now
+            throw -1;
+        }
+        else if (___board.at(___cord.to.at(0)+2).at(___cord.to.at(1)) == blackpawnptr && ___cord.to.at(0)+2 == 6) 
+        {
+            ___cord.from.at(0)=___cord.to.at(0)+2;
+            ___cord.from.at(1)=___cord.to.at(1);
+            return true;
+
+        }
+        else if (___board.at(___cord.to.at(0)+1).at(___cord.to.at(1)) == blackpawnptr) 
+        {
+            ___cord.from.at(0)=___cord.to.at(0)+1;
+            ___cord.from.at(1)=___cord.to.at(1);
+            return true;
+        }
     }
+    
     return false;            
 }
 
@@ -70,7 +101,8 @@ bool verifyKnight(movement &___cord, BOARD &___board)
         }
         try 
         {
-            if(___board.at(___cord.to.at(0)+y).at(___cord.to.at(1)+x) == knightptr)
+            if((___board.at(___cord.to.at(0)+y).at(___cord.to.at(1)+x) == whiteknightptr && ___cord.turn==white) || 
+            (___board.at(___cord.to.at(0)+y).at(___cord.to.at(1)+x) == blackknightptr && ___cord.turn==black))
             {
             ___cord.from.at(0)=___cord.to.at(0)+y;
             ___cord.from.at(1)=___cord.to.at(1)+x;
@@ -124,9 +156,8 @@ bool verifyBishop(movement &___cord, BOARD &___board)
                 int y=___cord.to.at(0)+i*refSwapper(true);
                 int x=___cord.to.at(1)+i*refSwapper(false);
 
-                
-                
-                    if(___board.at(y).at(x) == bishopptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+                    if((___board.at(y).at(x) == whitebishopptr && ___cord.turn == white) ||
+                    (___board.at(y).at(x) == blackbishopptr && ___cord.turn == black))
                     {
                         ___cord.from.at(0)=y;
                         ___cord.from.at(1)=x;
@@ -159,7 +190,8 @@ bool verifyRook(movement &___cord, BOARD &___board)
             {
                 break;
             }
-            if(___board.at(___cord.to.at(0)).at(x) == rookptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+            if((___board.at(___cord.to.at(0)).at(x) == whiterookptr && ___cord.turn==white) ||
+            (___board.at(___cord.to.at(0)).at(x) == whiterookptr && ___cord.turn==black))
             {
                 ___cord.from.at(0)=___cord.to.at(0);
                 ___cord.from.at(1)=x;
@@ -177,7 +209,8 @@ bool verifyRook(movement &___cord, BOARD &___board)
             {
                 break;
             }
-            if(___board.at(y).at(___cord.to.at(1)) == rookptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+            if((___board.at(___cord.to.at(y)).at(1) == whiterookptr && ___cord.turn==white) ||
+            (___board.at(___cord.to.at(y)).at(1) == whiterookptr && ___cord.turn==black)) // && __board.at(i).at(j)->colour==="the same colour than the current player"
             {
                 ___cord.from.at(0)=y;
                 ___cord.from.at(1)=___cord.to.at(1);
@@ -209,7 +242,8 @@ bool verifyQueen(movement &___cord, BOARD &___board)
             {
                 break;
             }
-            if(___board.at(___cord.to.at(0)).at(x) == queenptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+            if((___board.at(___cord.to.at(0)).at(x) == whitequeenptr && ___cord.turn == white)||
+            (___board.at(___cord.to.at(0)).at(x) == blackqueenptr && ___cord.turn == black))
             {
                 ___cord.from.at(0)=___cord.to.at(0);
                 ___cord.from.at(1)=x;
@@ -227,7 +261,8 @@ bool verifyQueen(movement &___cord, BOARD &___board)
             {
                 break;
             }
-            if(___board.at(y).at(___cord.to.at(1)) == queenptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+            if((___board.at(y).at(___cord.to.at(1)) == whitequeenptr && ___cord.turn == white) ||
+            (___board.at(y).at(___cord.to.at(1)) == blackqueenptr && ___cord.turn == black))
             {
                 ___cord.from.at(0)=y;
                 ___cord.from.at(1)=___cord.to.at(1);
@@ -281,7 +316,8 @@ bool verifyQueen(movement &___cord, BOARD &___board)
 
                 
                 
-                    if(___board.at(y).at(x) == queenptr) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+                    if((___board.at(y).at(x) == whitequeenptr && ___cord.turn == white) ||
+                     (___board.at(y).at(x) == blackqueenptr && ___cord.turn == black))
                     {
                         ___cord.from.at(0)=y;
                         ___cord.from.at(1)=x;
@@ -342,9 +378,16 @@ void verifyMovement(movement &__cord, BOARD &__board)
         }
 
         //Check whether the the destination is empty, the same colour or if it has a different colour (and if it is a capture)
-        if(__board.at(__cord.from.at(0)).at(__cord.from.at(1))->colour == __board.at(__cord.to.at(0)).at(__cord.to.at(1))->colour && __board.at(__cord.to.at(0)).at(__cord.to.at(1)) != emptyptr)
+        if (__board.at(__cord.to.at(0)).at(__cord.to.at(1)) != emptyptr) 
         {
-            valid = false;
+            if(__board.at(__cord.from.at(0)).at(__cord.from.at(1))->colour == __board.at(__cord.to.at(0)).at(__cord.to.at(1))->colour) 
+            {
+                valid = false;
+            }
+            else if (__cord.isCapture == false) 
+            {
+                valid = false;
+            }
         }
 
         if (valid == false)

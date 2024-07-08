@@ -1,5 +1,5 @@
+#include "bscurses.hpp"
 #include "board.hpp"
-#include "piece.hpp"
 
 // Since we are working with ncurses, first one is y and second one is x. I hate
 // it, but I'd rather not have two coordinate systems at the same time
@@ -14,18 +14,26 @@ void initBoard(std::array<std::array<piece*,8>,8> &_board) {
   }
 
   for (int i = 0; i <= 7; i++) {
-    _board[1][i] = pawnptr;
-    _board[1][i]->colour = white;
+    _board[1][i] = whitepawnptr;
   }
-  _board[3][3] = debugptr;
-  _board[3][3]->colour = black;
-  _board[0][2] = bishopptr;
-  _board[0][5] = bishopptr;
-  _board[0][1] = knightptr;
-  _board[0][6] = knightptr;
-  _board[0][0] = rookptr;
-  _board[0][7] = rookptr;
-  _board[0][3] = queenptr;
+  _board[0][2] = whitebishopptr;
+  _board[0][5] = whitebishopptr;
+  _board[0][1] = whiteknightptr;
+  _board[0][6] = whiteknightptr;
+  _board[0][0] = whiterookptr;
+  _board[0][7] = whiterookptr;
+  _board[0][3] = whitequeenptr;
+
+    for (int i = 0; i <= 7; i++) {
+    _board[6][i] = blackpawnptr;
+  }
+  _board[7][2] = blackbishopptr;
+  _board[7][5] = blackbishopptr;
+  _board[7][1] = blackknightptr;
+  _board[7][6] = blackknightptr;
+  _board[7][0] = blackrookptr;
+  _board[7][7] = blackrookptr;
+  _board[7][3] = blackqueenptr;
 }
 
 void drawBoard(std::array<std::array<piece*,8>,8> &_board)

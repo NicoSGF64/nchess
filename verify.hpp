@@ -1,6 +1,5 @@
 #ifndef VERIFY_HPP
 #define VERIFY_HPP
-#include <stdexcept>
 #include "move.hpp"
 #include "board.hpp"
 

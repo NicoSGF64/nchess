@@ -2,7 +2,6 @@
 #define BOARD_HPP
 #include <array>
 #include "piece.hpp"
-#include "bscurses.hpp"
 
 #define BOARD_SIZE 8
 #define BOARD std::array<std::array<piece*, BOARD_SIZE>, BOARD_SIZE>

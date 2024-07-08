@@ -1,8 +1,6 @@
 #ifndef MOVE_HPP
 #define MOVE_HPP
-#include <array>
-#include "bscurses.hpp"
-#include "piece.hpp"
+#include "board.hpp"
 
 struct movement
 {
@@ -11,9 +9,9 @@ struct movement
     std::array <int,2> to;  //Just as a reminder, [0] is the y axis, and [1] is the x axis.
     bool isCapture;
     int type;   // See piece.hpp for more details
-
+    bool turn=white;
 };
 
-extern void movePiece(std::array<std::array<piece*,8>,8> &_board);
-extern void getCord(movement &_cord, std::array<std::array<piece*,8>,8> &__board);
+extern void movePiece(movement &_cord, BOARD &_board);
+extern void getCord(movement &_cord, BOARD &__board);
 #endif
