@@ -182,6 +182,8 @@ bool verifyBishop(movement &___cord, BOARD &___board)
 
 bool verifyRook(movement &___cord, BOARD &___board)
 {
+    //Reference counter for swapping checking up or down
+    //Might want to unroll into four for loops instead of using ref
     for (int ref=0; ref<=1; ref++)
     {
         for(int x=___cord.to.at(1); x<=7; x+=(ref == 0 ? 1 : -1))
@@ -190,8 +192,10 @@ bool verifyRook(movement &___cord, BOARD &___board)
             {
                 break;
             }
+            //x+___cord.to.at(1) could be interesting instead of just x to adjust the reverse-search to start where the player wants to move
+            //instead of starting aimlessly and hoping that we find where it is located, maybe helping with the checks in the elseif
             if((___board.at(___cord.to.at(0)).at(x) == whiterookptr && ___cord.turn==white) ||
-            (___board.at(___cord.to.at(0)).at(x) == whiterookptr && ___cord.turn==black))
+            (___board.at(___cord.to.at(0)).at(x) == blackrookptr && ___cord.turn==black))
             {
                 ___cord.from.at(0)=___cord.to.at(0);
                 ___cord.from.at(1)=x;
@@ -199,7 +203,15 @@ bool verifyRook(movement &___cord, BOARD &___board)
             }
             else if (___board.at(___cord.to.at(0)).at(x) != emptyptr) 
             {
-                break;
+                if (___board.at(___cord.to.at(0)).at(x)->colour == ___cord.turn) 
+                {
+                    break;
+                }
+                //Check if it's a capture and, if so, if it's a different colour, then reverse it since we want to check the opposite
+                else if (!(___cord.isCapture == true && ___board.at(___cord.to.at(0)).at(x)->colour != ___cord.turn))
+                {
+                    break;
+                }
             }
         }
 
@@ -209,8 +221,9 @@ bool verifyRook(movement &___cord, BOARD &___board)
             {
                 break;
             }
-            if((___board.at(___cord.to.at(y)).at(1) == whiterookptr && ___cord.turn==white) ||
-            (___board.at(___cord.to.at(y)).at(1) == whiterookptr && ___cord.turn==black)) // && __board.at(i).at(j)->colour==="the same colour than the current player"
+            //Same comment as the x for loop
+            if((___board.at(y).at(___cord.to.at(1)) == whiterookptr && ___cord.turn==white) ||
+            (___board.at(y).at(___cord.to.at(1)) == blackrookptr && ___cord.turn==black))
             {
                 ___cord.from.at(0)=y;
                 ___cord.from.at(1)=___cord.to.at(1);
@@ -218,20 +231,26 @@ bool verifyRook(movement &___cord, BOARD &___board)
             }
             else if (___board.at(y).at(___cord.to.at(1)) != emptyptr) 
             {
-                break;
+                if (___board.at(y).at(___cord.to.at(1))->colour == ___cord.turn) 
+                {
+                    break;
+                }
+                //Check if it's a capture and, if so, if it's a different colour, then reverse it since we want to check the opposite
+                else if (!(___cord.isCapture == true && ___board.at(y).at(___cord.to.at(1))->colour != ___cord.turn))
+                {
+                    break;
+                }
             }
         }
                 
     }
 
-    
-    
     return false;
 }
 
 bool verifyQueen(movement &___cord, BOARD &___board)
 {
-    //It's a big copy-paste. Deal with it
+    //It's a big copy-paste
 
     //Rook part
     for (int ref=0; ref<=1; ref++)
@@ -242,8 +261,10 @@ bool verifyQueen(movement &___cord, BOARD &___board)
             {
                 break;
             }
-            if((___board.at(___cord.to.at(0)).at(x) == whitequeenptr && ___cord.turn == white)||
-            (___board.at(___cord.to.at(0)).at(x) == blackqueenptr && ___cord.turn == black))
+            //x+___cord.to.at(1) could be interesting instead of just x to adjust the reverse-search to start where the player wants to move
+            //instead of starting aimlessly and hoping that we find where it is located, maybe helping with the checks in the elseif
+            if((___board.at(___cord.to.at(0)).at(x) == whitequeenptr && ___cord.turn==white) ||
+            (___board.at(___cord.to.at(0)).at(x) == blackqueenptr && ___cord.turn==black))
             {
                 ___cord.from.at(0)=___cord.to.at(0);
                 ___cord.from.at(1)=x;
@@ -251,7 +272,15 @@ bool verifyQueen(movement &___cord, BOARD &___board)
             }
             else if (___board.at(___cord.to.at(0)).at(x) != emptyptr) 
             {
-                break;
+                if (___board.at(___cord.to.at(0)).at(x)->colour == ___cord.turn) 
+                {
+                    break;
+                }
+                //Check if it's a capture and, if so, if it's a different colour, then reverse it since we want to check the opposite
+                else if (!(___cord.isCapture == true && ___board.at(___cord.to.at(0)).at(x)->colour != ___cord.turn))
+                {
+                    break;
+                }
             }
         }
 
@@ -261,8 +290,9 @@ bool verifyQueen(movement &___cord, BOARD &___board)
             {
                 break;
             }
-            if((___board.at(y).at(___cord.to.at(1)) == whitequeenptr && ___cord.turn == white) ||
-            (___board.at(y).at(___cord.to.at(1)) == blackqueenptr && ___cord.turn == black))
+            //Same comment as the x for loop
+            if((___board.at(y).at(___cord.to.at(1)) == whitequeenptr && ___cord.turn==white) ||
+            (___board.at(y).at(___cord.to.at(1)) == blackqueenptr && ___cord.turn==black))
             {
                 ___cord.from.at(0)=y;
                 ___cord.from.at(1)=___cord.to.at(1);
@@ -270,7 +300,15 @@ bool verifyQueen(movement &___cord, BOARD &___board)
             }
             else if (___board.at(y).at(___cord.to.at(1)) != emptyptr) 
             {
-                break;
+                if (___board.at(y).at(___cord.to.at(1))->colour == ___cord.turn) 
+                {
+                    break;
+                }
+                //Check if it's a capture and, if so, if it's a different colour, then reverse it since we want to check the opposite
+                else if (!(___cord.isCapture == true && ___board.at(y).at(___cord.to.at(1))->colour != ___cord.turn))
+                {
+                    break;
+                }
             }
         }
                 

@@ -12,8 +12,8 @@ int main()
 	movement cord;
 	initBoard(board);
 	drawBoard(board);
-	//Fixed at 8 moves at the moment
-	for(int t=0; t<=8; t++)
+	//Fixed at 10 moves at the moment
+	for(int t=0; t<=10; t++)
 	{
 		movePiece(cord, board);
 		drawBoard(board);
